@@ -46,11 +46,9 @@ const MonthView = () => (
     <MonthHeader />
 
     <Table.Body>
-      { WeekRows(31, 1) }
+      { WeekRows(31, 3) }
     </Table.Body>
   </Table>
 );
-
-
 
 export default MonthView;

@@ -1,10 +1,13 @@
 import React from 'react';
-import { Container } from 'semantic-ui-react'
+import { Container, Header } from 'semantic-ui-react'
 
 import MonthView from './MonthView';
 
 const Calendar = () => (
-  <Container>
+  <Container style={{ padding: '2em 0em' }}>
+    <Header>
+      August
+    </Header>
     <MonthView />
   </Container>
 );
