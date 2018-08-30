@@ -2,25 +2,33 @@ import React from 'react';
 import { Table } from 'semantic-ui-react'
 import _ from 'lodash';
 
-const DayLabels = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
-const DaysOfWeekCells = DayLabels.map((s) => (<Table.HeaderCell> {s} </Table.HeaderCell>)) 
+import DayCell from './DayCell';
+
+const DayLabels = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
+const DaysOfWeekHeaders = DayLabels.map((s) => (<Table.HeaderCell> {s} </Table.HeaderCell>)) 
 
 const MonthHeader = () => (
   <Table.Header>
     <Table.Row>
-      { DaysOfWeekCells }
+      { DaysOfWeekHeaders }
     </Table.Row>
   </Table.Header>
 );
 
 const WeekRow = (startDay, lastDay, offset = 0) => {
-  const dayFn = (day) => (<Table.Cell> {day <= lastDay ? day : null} </Table.Cell>);
+  const dayFn = (day) => (<DayCell day={day <= lastDay ? day : null}/>);
+  //const dayFn = (day) => DayCell({ day });
   let DayCells;
 
-  if (offset == 0) {
+  if (offset === 0) {
     DayCells = _.range(startDay, startDay + 7).map(dayFn);
   } else {
-    DayCells = _.range(offset).map(() => <Table.Cell/>).concat(_.range(startDay, startDay + 7 - offset).map(dayFn));
+    DayCells = _.range(offset)
+      .map(() => <Table.Cell/>)
+      .concat(
+        _.range(startDay, startDay + 7 - offset)
+        .map(dayFn)
+      );
   }
   
   return (
@@ -39,10 +47,10 @@ const WeekRows = (lastDay, offset) => {
   } while (startDay + 7 <= lastDay);
 
   return rows;
-}
+};
 
 const MonthView = () => (
-  <Table fixed celled singleLine>
+  <Table fixed celled singleLine compact='very'>
     <MonthHeader />
 
     <Table.Body>
